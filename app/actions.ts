@@ -65,3 +65,35 @@ export async function updateTransaction(
   // On rafraîchit l'affichage après la modification
   revalidatePath('/');
 }
+
+// --- NOUVELLE FONCTION : TRANSACTIONS RÉCURRENTES ---
+
+export async function addRecurringTransaction(formData: FormData) {
+  const description = formData.get('description') as string;
+  const amount = parseFloat(formData.get('amount') as string);
+  const type = formData.get('type') as string;
+  const dayOfMonth = parseInt(formData.get('dayOfMonth') as string, 10);
+  
+  // Remplacer par l'ID de l'utilisateur connecté
+  const userId = "id-temporaire-utilisateur"; 
+
+  try {
+    await prisma.recurringTransaction.create({
+      data: {
+        description,
+        // On rend le montant négatif si c'est un prélèvement, positif si c'est un revenu
+        amount: type === 'EXPENSE' ? -Math.abs(amount) : Math.abs(amount),
+        type,
+        dayOfMonth,
+        userId,
+      }
+    });
+
+    // Rafraîchir la page pour afficher les nouvelles données
+    revalidatePath('/');
+    return { success: true };
+  } catch (error) {
+    console.error(error);
+    return { error: "Erreur lors de l'ajout de la transaction récurrente" };
+  }
+}

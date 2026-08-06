@@ -17,3 +17,13 @@ model Transaction {
   date      DateTime // Nouvelle colonne : La date réelle choisie sur le calendrier
   createdAt DateTime @default(now()) // On garde ça uniquement pour savoir quand la ligne a été créée techniquement
 }
+
+model RecurringTransaction {
+  id          String   @id @default(uuid())
+  amount      Float    // Positif pour un salaire, négatif pour un prélèvement (ex: -30.00 pour la box)
+  type        String   // Optionnel, mais pratique : "INCOME" ou "EXPENSE"
+  description String
+  dayOfMonth  Int
+  userId      String
+  createdAt   DateTime @default(now())
+}
