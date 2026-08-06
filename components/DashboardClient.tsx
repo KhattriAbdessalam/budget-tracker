@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { Trash2, Pencil, X } from 'lucide-react'; // Ajout de Pencil et X
 import TransactionForm from './TransactionForm';
+import RecurringForm from '@/components/RecurringForm';
 import { deleteTransaction, updateTransaction } from '../app/actions'; // Ajout de updateTransaction
 
 const COLORS = ['#6366f1', '#10b981', '#f43f5e', '#f59e0b', '#8b5cf6', '#0ea5e9', '#64748b'];
